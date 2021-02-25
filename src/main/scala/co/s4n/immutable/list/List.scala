@@ -16,6 +16,16 @@ object List {
     case Const(h, t) => h + sum(t)
   }
 
+  def head[A](lst : List[A]) = lst match {
+    case Nil => Nil
+    case Const(h, t) => h
+  }
+
+  def tail[A](lst : List[A]) : List[A] = lst match {
+    case Const(_, Nil) => Nil
+    case Const(h, t) => Const(h, tail(t))
+  }
+
   def length[A](lst : List[A]) : Int = lst match {
     case Nil => 0
     case Const(h, t) => 1 + length(t)

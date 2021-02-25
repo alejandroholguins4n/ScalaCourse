@@ -16,4 +16,13 @@ class ListTest extends AnyFlatSpec with Matchers {
     List.sum(testIntList) shouldEqual 15
   }
 
+  "The List.head method" should "return the first element of the List" in {
+    List.head(testIntList) shouldEqual 4
+  }
+
+  "The List.tail method" should "return the List minus the last element" in {
+    List.tail(testIntList) shouldEqual Const(4, Const(5, Nil))
+  }
+
+
 }
