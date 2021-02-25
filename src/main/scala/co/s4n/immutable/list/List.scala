@@ -16,14 +16,61 @@ object List {
     case Const(h, t) => h + sum(t)
   }
 
-  def head[A](lst : List[A]) = lst match {
+  //Ejercicio 2
+  def tail[A](lst : List[A]) : List[A] = lst match {
+    case Nil => Nil
+    case Const(h, t) => t
+  }
+
+  //Ejercicio 3
+  def head[A](lst : List[A]) : Any  = lst match {
     case Nil => Nil
     case Const(h, t) => h
   }
 
-  def tail[A](lst : List[A]) : List[A] = lst match {
+  //Ejercicio extra
+  def removeLastElement[A](lst : List[A]) : List[A] = lst match {
+    case Nil => Nil
     case Const(_, Nil) => Nil
-    case Const(h, t) => Const(h, tail(t))
+    case Const(h, t) => Const(h, removeLastElement(t))
+  }
+
+  //Ejercicio 4
+  def and(lst : List[Boolean]) : Boolean = lst match{
+    case Nil => false
+    case Const(false, Nil) => false
+    case Const(false, t) => false
+    case Const(true, Nil) => true
+    case Const(true, t) => and(t)
+  }
+
+  //Ejercicio 5
+  def or(lst : List[Boolean]) : Boolean = lst match{
+    case Nil => false
+    case Const(false, Nil) => false
+    case Const(false, t) => and(t)
+    case Const(true, Nil) => true
+    case Const(true, t) => true
+  }
+
+  //Ejercicio 6
+  def max(lst : List[Int]) : Int = {
+    def maxTail(lst : List[Int], maxValue : Int) : Int = lst match {
+      case Nil => maxValue
+      case Const(h, t) if h > maxValue => maxTail(t, h)
+      case Const(h, t) if h < maxValue => maxTail(t, maxValue)
+    }
+    maxTail(lst, Int.MinValue)
+  }
+
+  //Ejercicio 7
+  def min(lst : List[Long]) : Long = {
+    def minTail(lst : List[Long], minValue : Long) : Long = lst match {
+      case Nil => minValue
+      case Const(h, t) if h < minValue => minTail(t, h)
+      case Const(h, t) if h > minValue => minTail(t, minValue)
+    }
+    minTail(lst, Long.MaxValue)
   }
 
   def length[A](lst : List[A]) : Int = lst match {
