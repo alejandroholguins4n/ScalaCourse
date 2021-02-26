@@ -10,6 +10,7 @@ class ListTest extends AnyFlatSpec with Matchers {
   val testTrueList : List[Boolean] = List(true, true, true, true)
   val testMixedList : List[Boolean] = List(true, false, true, true)
   val testFalseList : List[Boolean] = List(false, false, false, false)
+  val testDoubleList : List[Double] = List(5.0,6.6,16.8,2.1,66684.2)
 
   "The List() constructor" should "build a list" in {
     List(1,2,3) shouldEqual Const(1,Const(2,Const(3,Nil)))
@@ -64,5 +65,10 @@ class ListTest extends AnyFlatSpec with Matchers {
   //Ejercicio 7
   "The List.min method" should "return the minimum value of the List" in {
     List.min(testLongList) shouldEqual 1555
+  }
+
+  //Ejercicio 8
+  "The List.minMax method" should "return the minimum value of the List" in {
+    List.minMax(testDoubleList) shouldEqual (2.1, 66684.2)
   }
 }

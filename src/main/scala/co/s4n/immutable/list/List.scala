@@ -59,6 +59,7 @@ object List {
       case Nil => maxValue
       case Const(h, t) if h > maxValue => maxTail(t, h)
       case Const(h, t) if h < maxValue => maxTail(t, maxValue)
+      case Const(_, _) => maxValue
     }
     maxTail(lst, Int.MinValue)
   }
@@ -69,8 +70,21 @@ object List {
       case Nil => minValue
       case Const(h, t) if h < minValue => minTail(t, h)
       case Const(h, t) if h > minValue => minTail(t, minValue)
+      case Const(_, _) => minValue
     }
     minTail(lst, Long.MaxValue)
+  }
+  //Ejercicio 8
+  def minMax(lst : List[Double]) : (Double, Double) = {
+    def minMaxTail(lst : List[Double], result : (Double, Double)) : (Double, Double) = lst match {
+      case Nil => result
+      case Const(h, t) if h < result._1 && h > result._2 => minMaxTail(t,(h, h))
+      case Const(h, t) if h < result._1 && h <= result._2 => minMaxTail(t,(h, result._2))
+      case Const(h, t) if h > result._1 && h > result._2 => minMaxTail(t,(result._1, h))
+      case Const(h, t) if h > result._1 && h > result._2 => minMaxTail(t,(result._1, result._2))
+      case Const(_, _) => result
+    }
+    minMaxTail(lst,(Double.MaxValue, Double.MinValue))
   }
 
   def length[A](lst : List[A]) : Int = lst match {
