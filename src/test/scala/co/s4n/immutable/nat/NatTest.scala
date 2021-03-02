@@ -5,7 +5,7 @@ import org.scalatest.matchers.should.Matchers
 
 class NatTest extends AnyFlatSpec with Matchers {
 
-  val four : Nat = Suc(Suc(Suc(Suc(Cero))))
+  val four: Nat = Suc(Suc(Suc(Suc(Cero))))
 
   //Ejercicio 10
   "The fromNatToInt method" should "return the number represented" in {
@@ -26,15 +26,15 @@ class NatTest extends AnyFlatSpec with Matchers {
 
   //Taller 2 Ejercicio 9
   "The addNat method with two parameters " should "return the sum of the two natural numbers" in {
-    Nat.addNat(Suc(Suc(Cero)),Suc(Cero)) shouldEqual Suc(Suc(Suc(Cero)))
+    Nat.addNat(Suc(Suc(Cero)), Suc(Cero)) shouldEqual Suc(Suc(Suc(Cero)))
   }
 
   "The addNat method" should "return the sum of the two natural numbers" in {
-    Nat.addNat(Suc(Suc(Suc(Cero))),Suc(Suc(Cero))) shouldEqual Suc(Suc(Suc(Suc(Suc(Cero)))))
+    Nat.addNat(Suc(Suc(Suc(Cero))), Suc(Suc(Cero))) shouldEqual Suc(Suc(Suc(Suc(Suc(Cero)))))
   }
 
   //Taller 2 Ejercicio 10
   "The prodNat method with two parameters " should "return the multiplication two natural numbers" in {
-    Nat.prodNat(Suc(Suc(Suc(Cero))),Suc(Suc(Cero))) shouldEqual Suc(Suc(Suc(Suc(Suc(Suc(Cero))))))
+    Nat.prodNat(Suc(Suc(Suc(Cero))), Suc(Suc(Cero))) shouldEqual Suc(Suc(Suc(Suc(Suc(Suc(Cero))))))
   }
 }

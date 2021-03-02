@@ -72,7 +72,7 @@ class ListTest extends AnyFlatSpec with Matchers {
     List.take(3, List("a", "b", "c", "d", "e")) shouldEqual List("a", "b", "c")
   }
 
-  "The List.take method while taking 0 values" should "return nil" in {
+  "The List.take method" should "return nil when the first parameter is 0" in {
     List.take(0, List(1, 2, 3, 4)) shouldEqual Nil
   }
 
@@ -81,7 +81,7 @@ class ListTest extends AnyFlatSpec with Matchers {
     List.init(testIntList) shouldEqual Const(4, Const(15, Nil))
   }
 
-  "The List.init method with only one value as paramether" should "return Nil" in {
+  "The List.init method" should "return Nil when there is only one parameter" in {
     List.init(List(1)) shouldEqual Nil
   }
 
@@ -90,17 +90,17 @@ class ListTest extends AnyFlatSpec with Matchers {
     List.split(List(1, 2, 3, 4, 5, 6, 7), 3) shouldEqual(List(1, 2, 3), List(4, 5, 6, 7))
   }
 
-  "The List.split method with 0 as parameter" should "return nil along the entire list" in {
+  "The List.split method" should "return nil along the entire list when 0 is the first parameter" in {
     List.split(List(1, 2, 3, 4, 5, 6, 7), 0) shouldEqual(Nil, List(1, 2, 3, 4, 5, 6, 7))
   }
 
   //Taller 2 Ejercicio 4
-  "The List.zip method with two lists" should "return a single list with both lists stacked one item at the time" in {
+  "The List.zip method" should "return a single list with both lists stacked one item at the time" in {
     List.zip(List(1, 2, 3), List(true, false, true, true)) shouldEqual List((1, true), (2, false), (3, true))
   }
 
   //Taller 2 Ejercicio 5
-  "The List.unzip method with one list" should "return both lists previously zipped" in {
+  "The List.unzip method" should "return both lists previously zipped" in {
     List.unzip(List((1, "a"), (2, "b"), (3, "c"))) shouldEqual(List(1, 2, 3), List("a", "b", "c"))
   }
 
@@ -115,11 +115,57 @@ class ListTest extends AnyFlatSpec with Matchers {
   }
 
   //Taller 2 Ejercicio 8
-  "The List.concat method with two lists" should "return a single list with all the values" in {
+  "The List.concat method" should "return a single list with all the values" in {
     List.concat(List(List(1, 2, 3), List(4, 5, 6))) shouldEqual List(1, 2, 3, 4, 5, 6)
   }
 
-  "The List.concat method with lists" should "return a single list with all the values" in {
+  "The List.concat method" should "return a single list with the values of all the lists" in {
     List.concat(List(List(1.0, 2.0), Nil, List(3.0, 4.0))) shouldEqual List(1.0, 2.0, 3.0, 4.0)
+  }
+
+  //Taller 2 Ejercicio 15
+  "The List.andF" should "return false when there is at least one false value" in {
+    List.andF(testMixedList) shouldEqual false
+  }
+
+  //Taller 2 Ejercicio 16
+  "The List.takeWhile" should "return the longest sub-list that complies the function" in {
+    List.takeWhile(List(true, true, false, true))((x) => if (x) true else false) shouldEqual Const(true, Const(true, Nil))
+  }
+
+  //Taller 2 Ejercicio 17
+  "The List.filter method" should "return a list with every value that meets the function" in {
+    List.filter(List(true, true, false, true))((x) => if (x) true else false) shouldEqual Const(true, Const(true, Const(true, Nil)))
+  }
+
+  //Taller 2 Ejercicio 18
+  "The List.unzipF method" should "return both lists previously zipped" in {
+    List.unzipF(List((1, "a"), (2, "b"), (3, "c"))) shouldEqual(List(1, 2, 3), List("a", "b", "c"))
+  }
+
+  //Taller 2 Ejercicio 19
+  "The List.lengthL method" should "return the length of the list" in {
+    List.lengthL(List(true, true, false, true)) shouldEqual 4
+  }
+
+  //Taller 2 Ejercicio 20
+  "The List.andL" should "return false when there is at least one false value" in {
+    List.andL(testMixedList) shouldEqual false
+  }
+
+  //Taller 2 Ejercicio 21
+  "The List.takeWhileL" should "return the longest list that complies the function" in {
+    List.takeWhileL(List(true, true, false, true))((x) => if (x) true else false) shouldEqual Const(true, Nil)
+  }
+
+  //Taller 2 Ejercicio 22
+  "The List.filterL method" should "return a list with every value that meets the function" in {
+    List.filterL(List(true, true, false, true))((x) => if (x) true else false) shouldEqual Const(true, Const(true, Const(true, Nil)))
+    //List.filterL(List(1, 2, 3, 4, 5))(_ > 3) shouldEqual Const(true, Const(true, Const(true, Nil)))
+  }
+
+  //Taller 2 Ejercicio 23
+  "The List.unzipL method" should "return both lists previously zipped" in {
+    List.unzipL(List((1, "a"), (2, "b"), (3, "c"))) shouldEqual(List(1, 2, 3), List("a", "b", "c"))
   }
 }

@@ -21,20 +21,20 @@ object List {
   }
 
   //Ejercicio 2
-  def tail[A](lst: List[A]): List[A] = lst match {
+  def tail[A](list: List[A]): List[A] = list match {
     case Nil => Nil
     case Const(_, t) => t
   }
 
   //Ejercicio 3
-  def head[A](lst: List[A]): Any = lst match {
+  def head[A](list: List[A]): Any = list match {
     case Nil => Nil
     case Const(h, _) => h
   }
 
   //Ejercicio 4
   @tailrec
-  def and(lst: List[Boolean]): Boolean = lst match {
+  def and(list: List[Boolean]): Boolean = list match {
     case Nil => false
     case Const(false, Nil) => false
     case Const(false, _) => false
@@ -43,7 +43,7 @@ object List {
   }
 
   //Ejercicio 5
-  def or(lst: List[Boolean]): Boolean = lst match {
+  def or(list: List[Boolean]): Boolean = list match {
     case Nil => false
     case Const(false, Nil) => false
     case Const(false, t) => and(t)
@@ -52,35 +52,35 @@ object List {
   }
 
   //Ejercicio 6
-  def max(lst: List[Int]): Int = {
+  def max(list: List[Int]): Int = {
     @tailrec
-    def maxTail(lst: List[Int], maxValue: Int): Int = lst match {
+    def maxTail(list: List[Int], maxValue: Int): Int = list match {
       case Nil => maxValue
       case Const(h, t) if h > maxValue => maxTail(t, h)
       case Const(h, t) if h < maxValue => maxTail(t, maxValue)
       case Const(_, _) => maxValue
     }
 
-    maxTail(lst, Int.MinValue)
+    maxTail(list, Int.MinValue)
   }
 
   //Ejercicio 7
-  def min(lst: List[Long]): Long = {
+  def min(list: List[Long]): Long = {
     @tailrec
-    def minTail(lst: List[Long], minValue: Long): Long = lst match {
+    def minTail(list: List[Long], minValue: Long): Long = list match {
       case Nil => minValue
       case Const(h, t) if h < minValue => minTail(t, h)
       case Const(h, t) if h > minValue => minTail(t, minValue)
       case Const(_, _) => minValue
     }
 
-    minTail(lst, Long.MaxValue)
+    minTail(list, Long.MaxValue)
   }
 
   //Ejercicio 8
-  def minMax(lst: List[Double]): (Double, Double) = {
+  def minMax(list: List[Double]): (Double, Double) = {
     @tailrec
-    def minMaxTail(lst: List[Double], result: (Double, Double)): (Double, Double) = lst match {
+    def minMaxTail(list: List[Double], result: (Double, Double)): (Double, Double) = list match {
       case Nil => result
       case Const(h, t) if h < result._1 && h > result._2 => minMaxTail(t, (h, h))
       case Const(h, t) if h < result._1 && h <= result._2 => minMaxTail(t, (h, result._2))
@@ -89,106 +89,167 @@ object List {
       case Const(_, _) => result
     }
 
-    minMaxTail(lst, (Double.MaxValue, Double.MinValue))
+    minMaxTail(list, (Double.MaxValue, Double.MinValue))
   }
 
-  def length[A](lst: List[A]): Int = lst match {
+  def length[A](list: List[A]): Int = list match {
     case Nil => 0
     case Const(_, t) => 1 + length(t)
   }
 
-  def addEnd[A](lst: List[A], elem: A): List[A] = lst match {
+  def addEnd[A](list: List[A], elem: A): List[A] = list match {
     case Nil => Const(elem, Nil)
     case Const(h, t) => Const(h, addEnd(t, elem))
   }
 
-  def append[A](lst1: List[A], lst2: List[A]): List[A] = (lst1, lst2) match {
+  def append[A](list1: List[A], list2: List[A]): List[A] = (list1, list2) match {
     case (Nil, Nil) => Nil
-    case (lst1, Nil) => lst1
-    case (Nil, lst2) => lst2
-    case (Const(h, t), lst2) => Const(h, append(t, lst2))
+    case (list1, Nil) => list1
+    case (Nil, list2) => list2
+    case (Const(h, t), list2) => Const(h, append(t, list2))
   }
 
   @tailrec
-  def drop[A](n: Int, lst: List[A]): List[A] = (n, lst) match {
-    case (0, lst) => lst
+  def drop[A](n: Int, list: List[A]): List[A] = (n, list) match {
+    case (0, list) => list
     case (_, Nil) => Nil
     case (n, Const(_, t)) => drop(n - 1, t)
   }
 
   //Taller 2 Ejercicio 1
-  def take[A](n: Int, lst: List[A]): List[A] = (n, lst) match {
+  def take[A](n: Int, list: List[A]): List[A] = (n, list) match {
     case (0, _) => Nil
     case (_, Nil) => Nil
     case (n, Const(h, t)) => Const(h, take(n - 1, t))
   }
 
   //Taller 2 Ejercicio 2
-  def init[A](lst: List[A]): List[A] = lst match {
+  def init[A](list: List[A]): List[A] = list match {
     case Nil => Nil
     case Const(_, Nil) => Nil
     case Const(h, t) => Const(h, init(t))
   }
 
   //Taller 2 Ejercicio 3
-  def split[A](lst: List[A], n: Int): (List[A], List[A]) = {
+  def split[A](list: List[A], n: Int): (List[A], List[A]) = {
     @tailrec
-    def splitTail[A](lst: List[A], n: Int, accumulator: List[A]): (List[A], List[A]) = (lst, n) match {
-      case (_, 0) => (accumulator, lst)
-      case (Nil, _) => (accumulator, lst)
+    def splitTail[A](list: List[A], n: Int, accumulator: List[A]): (List[A], List[A]) = (list, n) match {
+      case (_, 0) => (accumulator, list)
+      case (Nil, _) => (accumulator, list)
       case (Const(h, t), _) => splitTail(t, n - 1, addEnd(accumulator, h))
     }
 
-    splitTail(lst, n, Nil)
+    splitTail(list, n, Nil)
   }
 
   //Taller 2 Ejercicio 4
-  def zip[A, B](lst1: List[A], lst2: List[B]): List[(A, B)] = (lst1, lst2) match {
+  def zip[A, B](list1: List[A], list2: List[B]): List[(A, B)] = (list1, list2) match {
     case (Nil, _) => Nil
     case (_, Nil) => Nil
     case (Const(h, t), Const(h2, t2)) => Const((h, h2), zip(t, t2))
   }
 
   //Taller 2 Ejercicio 5
-  def unzip[A, B](lst: List[(A, B)]): (List[A], List[B]) = {
+  def unzip[A, B](list: List[(A, B)]): (List[A], List[B]) = {
     @tailrec
-    def unzipTail[A, B](lst: List[(A, B)], newLst1: List[A], newLst2: List[B]): (List[A], List[B]) = lst match {
-      case Nil => (newLst1, newLst2)
-      case Const((h1, h2), t) => unzipTail(t, addEnd(newLst1, h1), addEnd(newLst2, h2))
-    }
+    def unzipTail[A, B](list: List[(A, B)], newList1: List[A], newList2: List[B]): (List[A], List[B]) =
+      list match {
+        case Nil => (newList1, newList2)
+        case Const((h1, h2), t) => unzipTail(t, addEnd(newList1, h1), addEnd(newList2, h2))
+      }
 
-    unzipTail(lst, Nil, Nil)
+    unzipTail(list, Nil, Nil)
   }
 
   //Taller 2 Ejercicio 6
-  def reverse[A](lst: List[A]): List[A] = {
+  def reverse[A](list: List[A]): List[A] = {
     @tailrec
-    def reverseTail[A](lst: List[A], reversedLst: List[A]): List[A] = lst match {
-      case Nil => reversedLst
-      case Const(h, t) => reverseTail(t, Const(h, reversedLst))
+    def reverseTail[A](list: List[A], reversedList: List[A]): List[A] = list match {
+      case Nil => reversedList
+      case Const(h, t) => reverseTail(t, Const(h, reversedList))
     }
 
-    reverseTail(lst, Nil)
+    reverseTail(list, Nil)
   }
 
   //Taller 2 Ejercicio 7
-  def intersperse[A](lst: List[A], elem: A): List[A] = lst match {
+  def intersperse[A](list: List[A], elem: A): List[A] = list match {
     case Nil => Nil
     case Const(h, Nil) => Const(h, Nil)
     case Const(h, t) => Const(h, Const(elem, intersperse(t, elem)))
   }
 
   //Taller 2 Ejercicio 8
-  def concat[A](lst: List[List[A]]): List[A] = {
+  def concat[A](list: List[List[A]]): List[A] = {
     @tailrec
-    def concatTail[A](lst: List[List[A]], accumulator: List[A]): List[A] = lst match {
+    def concatTail[A](list: List[List[A]], accumulator: List[A]): List[A] = list match {
       case Nil => accumulator
       case Const(Nil, outer) => concatTail(outer, accumulator)
       case Const(Const(h, t), outer) => concatTail(Const(t, outer), Const(h, accumulator))
     }
 
-    reverse(concatTail(lst, Nil))
+    reverse(concatTail(list, Nil))
   }
+
+  def reduce(list: List[Int], z: Int)(f: (Int, Int) => Int): Int = list match {
+    case Nil => z
+    case Const(h, t) => f(h, reduce(t, z)(f))
+  }
+
+  def foldRight[A, B](list: List[A], z: B)(f: (A, B) => B): B = list match {
+    case Nil => z
+    case Const(h, t) => f(h, foldRight(t, z)(f))
+  }
+
+  def sumR(list: List[Int]): Int = foldRight(list, 0)((x, y) => x + y)
+
+  def mulR(list: List[Int]): Int = foldRight(list, 0)((x, y) => x * y)
+
+  //Taller 2 Ejercicio 14
+  def lengthFold[A](list: List[A]): Int = foldRight(list, 0)((_, y) => 1 + y)
+
+  @tailrec
+  def foldLeft[A, B](list: List[A], z: B)(f: (B, A) => B): B = list match {
+    case Const(h, t) => foldLeft(t, f(z, h))(f)
+    case Nil => z
+  }
+
+  def sumarUno(list: List[Int]): List[Int] = {
+    foldRight(list, Nil: List[Int])((elem, list) => Const(elem + 1, list))
+  }
+
+  //Taller 2 Ejercicio 15
+  def andF(list: List[Boolean]): Boolean = foldRight(list, true)((x, y) => x && y)
+
+  //Taller 2 Ejercicio 16
+  def takeWhile[A](list: List[A])(p: A => Boolean): List[A] =
+    foldRight(list, Nil: List[A])((x, y) => if (p(x)) Const(x, y) else Nil)
+
+  //Taller 2 Ejercicio 17
+  def filter[A](list: List[A])(p: A => Boolean): List[A] =
+    foldRight(list, Nil: List[A])((x, y) => if (p(x)) Const(x, y) else y)
+
+  //Taller 2 Ejercicio 18
+  def unzipF[A, B](list: List[(A, B)]): (List[A], List[B]) =
+    foldRight(list, (Nil: List[A], Nil: List[B]))((x, y) => (Const(x._1, y._1), Const(x._2, y._2)))
+
+  //Taller 2 Ejercicio 19
+  def lengthL[A](list: List[A]): Int = foldLeft(list, 0)((x, _) => 1 + x)
+
+  //Taller 2 Ejercicio 20
+  def andL(list: List[Boolean]): Boolean = foldLeft(list, true)((x, y) => x && y)
+
+  //Taller 2 Ejercicio 21
+  def takeWhileL[A](list: List[A])(p: A => Boolean): List[A] =
+    foldLeft(list, Nil: List[A])((x, y) => if (p(y)) addEnd(x, y) else Nil)
+
+  //Taller 2 Ejercicio 22
+  def filterL[A](list: List[A])(p: A => Boolean): List[A] =
+    foldLeft(list, Nil: List[A])((x, y) => if (p(y)) addEnd(x, y) else x)
+
+  //Taller 2 Ejercicio 23
+  def unzipL[A, B](list: List[(A, B)]): (List[A], List[B]) =
+    foldLeft(list, (Nil: List[A], Nil: List[B]))((x, y) => (addEnd(x._1, y._1), addEnd(x._2, y._2)))
 
 }
 
