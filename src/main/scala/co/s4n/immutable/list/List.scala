@@ -251,5 +251,14 @@ object List {
   def unzipL[A, B](list: List[(A, B)]): (List[A], List[B]) =
     foldLeft(list, (Nil: List[A], Nil: List[B]))((x, y) => (addEnd(x._1, y._1), addEnd(x._2, y._2)))
 
+  //Reto extra, función comienza con la lista entera para poder implementarse usando foldRight
+  def dropWhile[A](list: List[A])(p: A => Boolean): List[A] = {
+    def f(a: A, b: (Boolean, List[A])): (Boolean, List[A]) = b match {
+      case (true, Const(h, t)) => if (p(h)) (true, t) else (false, Const(h, t))
+      case (true, Nil) => (false, Nil)
+      case (false, _) => b
+    }
+    foldRight(list, (true, list))(f)._2
+  }
 }
 
