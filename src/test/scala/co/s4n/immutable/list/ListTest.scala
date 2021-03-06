@@ -155,7 +155,7 @@ class ListTest extends AnyFlatSpec with Matchers {
 
   //Taller 2 Ejercicio 21
   "The List.takeWhileL" should "return the longest list that complies the function" in {
-    List.takeWhileL(List(true, true, false, true))((x) => if (x) true else false) shouldEqual Const(true, Nil)
+    List.takeWhileL(List(true, true, false, true))((x) => if (x) true else false) shouldEqual Const(true, Const(true, Nil))
   }
 
   //Taller 2 Ejercicio 22
@@ -167,5 +167,24 @@ class ListTest extends AnyFlatSpec with Matchers {
   //Taller 2 Ejercicio 23
   "The List.unzipL method" should "return both lists previously zipped" in {
     List.unzipL(List((1, "a"), (2, "b"), (3, "c"))) shouldEqual(List(1, 2, 3), List("a", "b", "c"))
+  }
+
+  //Extra challenge
+  "The List.dropWhile method" should "return a list without the elements up until the condition is not met" in {
+    List.dropWhile(
+      List(true, true, false, true))((x) => if (x) true else false
+    ) shouldEqual Const(false, Const(true, Nil))
+  }
+
+  "The List.dropWhile method" should "return a the same list if the condition is not met from the start" in {
+    List.dropWhile(
+      List(false, true, true, false, true))((x) => if (x) true else false
+    ) shouldEqual List(false, true, true, false, true)
+  }
+
+  "The List.dropWhile method" should "return Nil if every element meets the condition" in {
+    List.dropWhile(
+      List(true, true, true, true, true))((x) => if (x) true else false
+    ) shouldEqual Nil
   }
 }
