@@ -240,8 +240,14 @@ object List {
   def andL(list: List[Boolean]): Boolean = foldLeft(list, true)((x, y) => x && y)
 
   //Taller 2 Ejercicio 21
-  def takeWhileL[A](list: List[A])(p: A => Boolean): List[A] =
-    foldLeft(list, Nil: List[A])((x, y) => if (p(y)) addEnd(x, y) else Nil)
+  def takeWhileL[A](list: List[A])(p: A => Boolean): List[A] = {
+    def f(b: (Boolean, List[A]), a: A): (Boolean, List[A]) = b match {
+      case (true, list) => if (p(a)) (true, addEnd(list, a)) else (false, list)
+      case (false, list) => b
+    }
+
+    foldLeft(list, (true, Nil: List[A]))(f)._2
+  }
 
   //Taller 2 Ejercicio 22
   def filterL[A](list: List[A])(p: A => Boolean): List[A] =
@@ -251,13 +257,14 @@ object List {
   def unzipL[A, B](list: List[(A, B)]): (List[A], List[B]) =
     foldLeft(list, (Nil: List[A], Nil: List[B]))((x, y) => (addEnd(x._1, y._1), addEnd(x._2, y._2)))
 
-  //Reto extra, función comienza con la lista entera para poder implementarse usando foldRight
+  //Extra challenge, the function b value starts with the entire list so it can be implemented with foldRight
   def dropWhile[A](list: List[A])(p: A => Boolean): List[A] = {
     def f(a: A, b: (Boolean, List[A])): (Boolean, List[A]) = b match {
       case (true, Const(h, t)) => if (p(h)) (true, t) else (false, Const(h, t))
       case (true, Nil) => (false, Nil)
       case (false, _) => b
     }
+
     foldRight(list, (true, list))(f)._2
   }
 }

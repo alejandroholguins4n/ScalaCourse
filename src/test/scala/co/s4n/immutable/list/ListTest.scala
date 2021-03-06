@@ -169,6 +169,7 @@ class ListTest extends AnyFlatSpec with Matchers {
     List.unzipL(List((1, "a"), (2, "b"), (3, "c"))) shouldEqual(List(1, 2, 3), List("a", "b", "c"))
   }
 
+  //Extra challenge
   "The List.dropWhile method" should "return a list without the elements up until the condition is not met" in {
     List.dropWhile(
       List(true, true, false, true))((x) => if (x) true else false
