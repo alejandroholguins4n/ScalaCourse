@@ -21,6 +21,7 @@ object Director {
     new Director(nombre, apellido, nacimiento)
   }
 
+  //Since the birth date is on timestamp, the oldest director is whichever has a lower timestamp
   def esMayor(director1: Director, director2: Director): Director = {
     if (director1.nacimiento < director2.nacimiento) {
       director1
