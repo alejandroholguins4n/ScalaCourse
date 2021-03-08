@@ -130,19 +130,19 @@ class Question {
     encodeTail(list, List())
   }
 
+  //Helper function, returns the list with the head element repeated n times
+  def repeater[A](value: List[A], occurrences: Int): List[A] = occurrences match {
+    case 0 => value.tail
+    case _ => repeater(value.head :: value, occurrences - 1)
+  }
+
   //Question 12
   def decodeModified[A](list: List[Any]): List[Any] = {
+    @tailrec
     def decodeTail[A](list: List[Any], accumulator: List[Any]): List[Any] = list match {
       case Nil => accumulator
       case (value, occurrences: Int) :: outerTail => decodeTail(outerTail, accumulator :+ repeater(List(value), occurrences))
       case head :: tail => decodeTail(tail, accumulator :+ head)
-    }
-
-    //Helper function, returns the list with the element repeated n times
-    @tailrec
-    def repeater[A](value: List[A], occurrences: Int): List[A] = occurrences match {
-      case 0 => value.tail
-      case _ => repeater(value.head :: value, occurrences - 1)
     }
 
     decodeTail(list, List())
@@ -165,12 +165,6 @@ class Question {
     def repliTail[A](list: List[A], accumulator: List[A]): List[A] = (list, accumulator) match {
       case (Nil, _) => accumulator
       case (head :: tail, _) => repliTail(tail, accumulator ::: repeater(List(head), occurrences))
-    }
-
-    @tailrec
-    def repeater[A](value: List[A], occurrences: Int): List[A] = occurrences match {
-      case 0 => value.tail
-      case _ => repeater(value.head :: value, occurrences - 1)
     }
 
     repliTail(list, List())
